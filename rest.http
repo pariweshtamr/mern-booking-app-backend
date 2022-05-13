@@ -25,3 +25,6 @@ Content-Type: application/json
 ### delete hotel
 DELETE http://localhost:8000/api/hotels/627e13551350d8b5e157ae49
 
+### get hotel
+GET http://localhost:8000/api/hotels/627e13551350d8b5e157ae49
+
