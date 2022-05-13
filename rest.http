@@ -1,0 +1,15 @@
+// ========================================= HOTEL ==================================== //
+### add hotel
+POST http://localhost:8000/api/hotels/
+Content-Type: application/json
+
+{
+    "name": "Hotel Del Luna",
+    "type": "Hotel",
+    "city": "Seoul",
+    "address": "Korea",
+    "distance": "500",
+    "title": "Best Hotel in Seoul",
+    "description": "Hotel description",
+    "cheapestPrice": 179
+}
