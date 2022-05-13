@@ -19,3 +19,13 @@ export const updateHotel = (_id, updatedHotel) => {
     console.log(error)
   }
 }
+
+//Delete hotel
+export const deleteHotel = (_id) => {
+  try {
+    const hotel = Hotel.findByIdAndDelete(_id)
+    return hotel
+  } catch (error) {
+    console.log(error)
+  }
+}

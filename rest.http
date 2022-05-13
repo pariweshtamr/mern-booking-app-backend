@@ -15,10 +15,13 @@ Content-Type: application/json
 }
 
 ### update hotel
-PUT http://localhost:8000/api/hotels/627e0cc2f84a6b5e31f7090c
+PUT http://localhost:8000/api/hotels/627e13551350d8b5e157ae49
 Content-Type: application/json
 
 {
-    "name": "Hotel Del Luna",
     "description": "Hotel Del Luna is 5 - star hotel located at the heart of Seoul city." 
 }
+
+### delete hotel
+DELETE http://localhost:8000/api/hotels/627e13551350d8b5e157ae49
+

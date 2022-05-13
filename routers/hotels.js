@@ -1,5 +1,9 @@
 import express from 'express'
-import { addHotel, updateHotel } from '../models/Hotel/Hotel.model.js'
+import {
+  addHotel,
+  deleteHotel,
+  updateHotel,
+} from '../models/Hotel/Hotel.model.js'
 
 const hotelsRouter = express.Router()
 
@@ -22,6 +26,16 @@ hotelsRouter.put('/:id', async (req, res) => {
       { new: true },
     )
     res.status(200).json(updatedhotel)
+  } catch (error) {
+    res.status(500).json(error)
+  }
+})
+
+//DELETE
+hotelsRouter.delete('/:id', async (req, res) => {
+  try {
+    await deleteHotel(req.params.id)
+    res.status(200).json('Hotel has been removed.')
   } catch (error) {
     res.status(500).json(error)
   }
