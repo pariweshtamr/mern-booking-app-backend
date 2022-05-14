@@ -6,7 +6,7 @@ export const addHotel = (newHotel) => {
     const hotel = Hotel(newHotel).save()
     return hotel
   } catch (error) {
-    console.log(error)
+    next(error)
   }
 }
 
@@ -16,7 +16,7 @@ export const updateHotel = (_id, updatedHotel) => {
     const hotel = Hotel.findByIdAndUpdate(_id, updatedHotel, { new: true })
     return hotel
   } catch (error) {
-    console.log(error)
+    next(error)
   }
 }
 
@@ -26,7 +26,7 @@ export const deleteHotel = (_id) => {
     const hotel = Hotel.findByIdAndDelete(_id)
     return hotel
   } catch (error) {
-    console.log(error)
+    next(error)
   }
 }
 
@@ -35,6 +35,16 @@ export const getHotel = (_id) => {
   try {
     const hotel = Hotel.findById(_id)
     return hotel
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+//Get all hotels
+export const getAllHotel = (_id) => {
+  try {
+    const hotels = Hotel.find(_id)
+    return hotels
   } catch (error) {
     console.log(error)
   }

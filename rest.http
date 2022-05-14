@@ -4,14 +4,14 @@ POST http://localhost:8000/api/hotels/
 Content-Type: application/json
 
 {
-    "name": "Hotel Del Luna",
+    "name": "Hotel Sofitel",
     "type": "Hotel",
-    "city": "Seoul",
-    "address": "Korea",
-    "distance": "500",
-    "title": "Best Hotel in Seoul",
+    "city": "Sydney",
+    "address": "Australia",
+    "distance": "1000",
+    "title": "Best Hotel in Sydney",
     "description": "Hotel description",
-    "cheapestPrice": 179
+    "cheapestPrice": 250
 }
 
 ### update hotel
@@ -19,7 +19,7 @@ PUT http://localhost:8000/api/hotels/627e13551350d8b5e157ae49
 Content-Type: application/json
 
 {
-    "description": "Hotel Del Luna is 5 - star hotel located at the heart of Seoul city." 
+    "name": "Hotel Del Luna" 
 }
 
 ### delete hotel
@@ -27,4 +27,23 @@ DELETE http://localhost:8000/api/hotels/627e13551350d8b5e157ae49
 
 ### get hotel
 GET http://localhost:8000/api/hotels/627e13551350d8b5e157ae49
+
+### get all hotels
+GET http://localhost:8000/api/hotels/
+
+
+
+
+
+// ========================================= AUTH ==================================== //
+### register user 
+POST http://localhost:8000/api/auth/register
+Content-Type: application/json
+
+{
+    "username": "pariwesh7",
+    "email": "admin@gmail.com",
+    "password": "C.ronaldo7",
+    "isAdmin": true
+}
 

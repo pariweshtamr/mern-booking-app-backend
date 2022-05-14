@@ -20,9 +20,9 @@ app.use(cors())
 app.use(helmet())
 
 // Import routers
-import authRouter from './routers/auth.js'
-import userRouter from './routers/users.js'
-import hotelsRouter from './routers/hotels.js'
+import authRouter from './routers/authRouter.js'
+import userRouter from './routers/usersRouter.js'
+import hotelsRouter from './routers/hotelsRouter.js'
 
 // Use Routers
 app.use('/api/auth', authRouter)
@@ -30,8 +30,15 @@ app.use('/api/users', userRouter)
 app.use('/api/hotels', hotelsRouter)
 app.use('/api/rooms', authRouter)
 
-app.use('/', (req, res) => {
-  res.json({ message: 'Server is ready' })
+app.use((error, req, res, next) => {
+  const errorStatus = error.status || 500
+  const errorMessage = error.message || 'Something went wrong!'
+  return res.status(errorStatus).json({
+    success: false,
+    status: errorStatus,
+    message: errorMessage,
+    stack: error.stack,
+  })
 })
 
 app.listen(PORT, (error) => {
