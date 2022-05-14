@@ -10,3 +10,14 @@ export const createUser = (newUser) => {
     console.log(error)
   }
 }
+
+// get user by username
+
+export const getUserByUsername = (username) => {
+  try {
+    const user = User.findOne({ username })
+    return user
+  } catch (error) {
+    console.log(error)
+  }
+}

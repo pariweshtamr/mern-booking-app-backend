@@ -47,3 +47,13 @@ Content-Type: application/json
     "isAdmin": true
 }
 
+
+### login user 
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+
+{
+    "username": "pariwesh7",
+    "password": "C.ronaldo7"
+}
+

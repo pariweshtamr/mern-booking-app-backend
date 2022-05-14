@@ -1,6 +1,7 @@
 import express from 'express'
-import { hashPassword } from '../helpers/bcrypt.helper.js'
-import { createUser } from '../models/User/User.model.js'
+import { comparePassword, hashPassword } from '../helpers/bcrypt.helper.js'
+import { createUser, getUserByUsername } from '../models/User/User.model.js'
+import { createError } from '../utils/error.js'
 
 const authRouter = express.Router()
 
@@ -33,6 +34,33 @@ authRouter.post('/register', async (req, res, next) => {
       status: 'error',
       message: 'Unable to create new user. Please try again later',
     })
+  } catch (error) {
+    next(error)
+  }
+})
+
+authRouter.post('/login', async (req, res, next) => {
+  try {
+    const { username, password } = req.body
+
+    const user = await getUserByUsername(username)
+    if (user?._id) {
+      // check if password is valid
+
+      const isPasswordMatch = comparePassword(password, user.password)
+
+      if (isPasswordMatch) {
+        const { password, isAdmin, ...otherDetails } = user._doc
+        return res.status(200).json({
+          status: 'success',
+          message: 'Login successful',
+          ...otherDetails,
+        })
+      } else {
+        return next(createError(400, 'Wrong password or username'))
+      }
+    }
+    return next(createError(404, 'User not found!'))
   } catch (error) {
     next(error)
   }
