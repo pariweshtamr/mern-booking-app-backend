@@ -57,3 +57,15 @@ Content-Type: application/json
     "password": "C.ronaldo7"
 }
 
+
+// ========================================= USER ==================================== //
+### update user
+PUT http://localhost:8000/api/users/627f04187c342fb4e8b8b024
+Content-Type: application/json
+
+{
+    "username": "pariwesh7"
+}
+
+### check authentication
+GET http://localhost:8000/api/users/checkauthentication

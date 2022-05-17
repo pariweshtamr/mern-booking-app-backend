@@ -2,6 +2,7 @@ import express from 'express'
 import { comparePassword, hashPassword } from '../helpers/bcrypt.helper.js'
 import { createUser, getUserByUsername } from '../models/User/User.model.js'
 import { createError } from '../utils/error.js'
+import jwt from 'jsonwebtoken'
 
 const authRouter = express.Router()
 
@@ -50,12 +51,22 @@ authRouter.post('/login', async (req, res, next) => {
       const isPasswordMatch = comparePassword(password, user.password)
 
       if (isPasswordMatch) {
+        const token = jwt.sign(
+          { id: user._id, isAdmin: user.isAdmin },
+          process.env.JWT_SECRET,
+        )
+
         const { password, isAdmin, ...otherDetails } = user._doc
-        return res.status(200).json({
-          status: 'success',
-          message: 'Login successful',
-          ...otherDetails,
-        })
+        return res
+          .cookie('access_token', token, {
+            httpOnly: true, //it doesn't allow any client secret to reach this cookie
+          })
+          .status(200)
+          .json({
+            status: 'success',
+            message: 'Login successful',
+            ...otherDetails,
+          })
       } else {
         return next(createError(400, 'Wrong password or username'))
       }
