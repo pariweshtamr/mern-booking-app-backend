@@ -32,6 +32,37 @@ GET http://localhost:8000/api/hotels/627e13551350d8b5e157ae49
 GET http://localhost:8000/api/hotels/
 
 
+// ========================================= ROOM ==================================== //
+
+### add room
+POST http://localhost:8000/api/rooms/627e13551350d8b5e157ae49
+Content-Type: application/json
+
+{
+    "title": "Luxury Room",
+    "price": 250,
+    "maxPeople": 2,
+    "description": "King size bed, 1 Bathroom, balcony",
+    "roomNumbers": [{"number": 101}, {"number": 102}]
+}
+
+### update room
+PUT http://localhost:8000/api/rooms/628c52e2ad64fa4f4ba3a212
+Content-Type: application/json
+
+{
+    "title": "Premium Room" 
+}
+
+### delete room
+DELETE http://localhost:8000/api/rooms/628c52e2ad64fa4f4ba3a212/627e13551350d8b5e157ae49
+
+### get room
+GET http://localhost:8000/api/rooms/628c52e2ad64fa4f4ba3a212
+
+### get all rooms
+GET http://localhost:8000/api/rooms/
+
 
 
 
@@ -69,3 +100,5 @@ Content-Type: application/json
 
 ### check authentication
 GET http://localhost:8000/api/users/checkauthentication
+
+

@@ -13,13 +13,6 @@ userRouter.all('/', (req, res, next) => {
   next()
 })
 
-userRouter.get('/', (req, res) => {
-  res.send('This is user endpoint')
-})
-userRouter.get('/register', (req, res) => {
-  res.json('This is user register endpoint')
-})
-
 // check authentication
 userRouter.get('/checkauthentication', verifyToken, (req, res, next) => {
   res.send('hello user, You are logged in')

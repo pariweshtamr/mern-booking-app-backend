@@ -25,12 +25,13 @@ app.use(cookieParser())
 import authRouter from './routers/authRouter.js'
 import userRouter from './routers/usersRouter.js'
 import hotelsRouter from './routers/hotelsRouter.js'
+import roomRouter from './routers/roomsRouter.js'
 
 // Use Routers
 app.use('/api/auth', authRouter)
 app.use('/api/users', userRouter)
 app.use('/api/hotels', hotelsRouter)
-app.use('/api/rooms', authRouter)
+app.use('/api/rooms', roomRouter)
 
 app.use((error, req, res, next) => {
   const errorStatus = error.status || 500
