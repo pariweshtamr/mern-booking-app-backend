@@ -29,7 +29,16 @@ DELETE http://localhost:8000/api/hotels/627e13551350d8b5e157ae49
 GET http://localhost:8000/api/hotels/627e13551350d8b5e157ae49
 
 ### get all hotels
-GET http://localhost:8000/api/hotels/
+GET http://localhost:8000/api/hotels?featured=false/
+
+
+### get number of hotels by city
+
+GET http://localhost:8000/api/hotels/city?cities=Sydney,Melbourne,london
+
+### get number of property type by type
+
+GET http://localhost:8000/api/hotels/type
 
 
 // ========================================= ROOM ==================================== //

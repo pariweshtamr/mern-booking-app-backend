@@ -63,8 +63,8 @@ roomRouter.delete('/:id/:hotelid', verifyAdmin, async (req, res, next) => {
   }
 })
 
-//GET A HOTEL
-roomRouter.get('/:id', verifyAdmin, async (req, res, next) => {
+//GET A ROOM
+roomRouter.get('/:id', async (req, res, next) => {
   try {
     const hotel = await getRoom(req.params.id)
     res.status(200).json(room)
@@ -73,8 +73,8 @@ roomRouter.get('/:id', verifyAdmin, async (req, res, next) => {
   }
 })
 
-//GET ALL HOTELS
-roomRouter.get('/', verifyAdmin, async (req, res, next) => {
+//GET ALL ROOMS
+roomRouter.get('/', async (req, res, next) => {
   try {
     const rooms = await getAllRooms()
     res.status(200).json(rooms)
