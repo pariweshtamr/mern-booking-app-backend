@@ -41,7 +41,7 @@ export const getHotel = (_id) => {
 }
 
 //Get all hotels
-export const getAllHotel = ({ query, limit }) => {
+export const getAllHotel = ( query, limit ) => {
   try {
     const hotels = Hotel.find(query).limit(limit)
     return hotels

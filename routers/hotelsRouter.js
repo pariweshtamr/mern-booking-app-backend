@@ -57,10 +57,12 @@ hotelsRouter.get('/find/:id', verifyAdmin, async (req, res, next) => {
 
 //GET ALL HOTELS
 hotelsRouter.get('/', async (req, res, next) => {
+  const { min, max, ...others } = req.query
   try {
-    const query = req.query
-    const limit = req.query.limit
-    const hotels = await getAllHotel({ query, limit })
+    const hotels = await getAllHotel({
+      ...others,
+      cheapestPrice: { $gt: min | 1, $lt: max || 999 },
+    }).limit(req.query.limit)
     res.status(200).json(hotels)
   } catch (error) {
     // res.status(500).json(error)
