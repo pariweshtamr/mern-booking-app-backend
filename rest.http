@@ -4,14 +4,14 @@ POST http://localhost:8000/api/hotels/
 Content-Type: application/json
 
 {
-    "name": "Hotel Sofitel",
+    "name": "Hotel Nootel",
     "type": "Hotel",
-    "city": "Sydney",
+    "city": "sydney",
     "address": "Australia",
     "distance": "1000",
     "title": "Best Hotel in Sydney",
     "description": "Hotel description",
-    "cheapestPrice": 250
+    "cheapestPrice": 350
 }
 
 ### update hotel
