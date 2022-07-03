@@ -45,7 +45,7 @@ GET http://localhost:8000/api/hotels/type
 // ========================================= ROOM ==================================== //
 
 ### add room
-POST http://localhost:8000/api/rooms/627e13551350d8b5e157ae49
+POST http://localhost:8000/api/rooms/62b1a648b73013f1036e0f3d
 Content-Type: application/json
 
 {
