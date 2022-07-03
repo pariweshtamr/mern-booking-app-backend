@@ -46,7 +46,7 @@ hotelsRouter.delete('/:id', verifyAdmin, async (req, res, next) => {
 })
 
 //GET A HOTEL
-hotelsRouter.get('/find/:id', async (req, res, next) => {
+hotelsRouter.get('/find/:id', verifyAdmin, async (req, res, next) => {
   try {
     const hotel = await getHotel(req.params.id)
     res.status(200).json(hotel)
