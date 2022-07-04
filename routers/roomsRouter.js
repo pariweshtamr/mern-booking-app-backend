@@ -6,6 +6,7 @@ import {
   getAllRooms,
   getRoom,
   updateRoom,
+  updateRoomAvailability,
 } from "../models/Room/Room.model.js"
 import { verifyAdmin } from "../utils/verifyToken.js"
 
@@ -40,6 +41,21 @@ roomRouter.put("/:id", verifyAdmin, async (req, res, next) => {
       { new: true }
     )
     res.status(200).json(room)
+  } catch (error) {
+    next(error)
+  }
+})
+
+//UPDATE AVAILABILITY
+roomRouter.put("/availability/:id", async (req, res, next) => {
+  try {
+    const _id = req.params.id
+    const dates = req.body.dates
+
+    console.log(_id, dates)
+    const room = await updateRoomAvailability(_id, dates)
+
+    res.status(200).json("Room status has been updated")
   } catch (error) {
     next(error)
   }

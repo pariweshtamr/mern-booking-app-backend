@@ -1,5 +1,5 @@
-import Hotel from '../Hotel/Hotel.schema.js'
-import Room from './Room.schema.js'
+import Hotel from "../Hotel/Hotel.schema.js"
+import Room from "./Room.schema.js"
 
 // add room
 
@@ -17,6 +17,22 @@ export const updateRoom = (_id, updatedRoom) => {
   try {
     const room = Room.findByIdAndUpdate(_id, updatedRoom, { new: true })
     return room
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+//Update room availability
+export const updateRoomAvailability = async (_id, dates) => {
+  try {
+    await Room.updateOne(
+      { "roomNumbers._id": _id },
+      {
+        $push: {
+          "roomNumbers.$.unavailableDates": dates,
+        },
+      }
+    )
   } catch (error) {
     console.log(error)
   }
