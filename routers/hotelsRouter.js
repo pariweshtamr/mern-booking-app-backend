@@ -1,4 +1,5 @@
 import express from "express"
+import { verifyAdmin } from "../middlewares/auth.middleware.js"
 import {
   addHotel,
   deleteHotel,
@@ -8,7 +9,6 @@ import {
 } from "../models/Hotel/Hotel.model.js"
 import Hotel from "../models/Hotel/Hotel.schema.js"
 import Room from "../models/Room/Room.schema.js"
-import { verifyAdmin } from "../utils/verifyToken.js"
 
 const hotelsRouter = express.Router()
 
@@ -37,7 +37,7 @@ hotelsRouter.put("/:id", verifyAdmin, async (req, res, next) => {
 })
 
 //DELETE
-hotelsRouter.delete("/:id", verifyAdmin, async (req, res, next) => {
+hotelsRouter.delete("/:id", async (req, res, next) => {
   try {
     await deleteHotel(req.params.id)
     res.status(200).json("Hotel has been removed.")
@@ -57,7 +57,7 @@ hotelsRouter.get("/find/:id", async (req, res, next) => {
 })
 
 //GET ALL HOTELS
-hotelsRouter.get("/", async (req, res, next) => {
+hotelsRouter.get("/", verifyAdmin, async (req, res, next) => {
   const { min, max, ...others } = req.query
   try {
     const hotels = await getAllHotel({

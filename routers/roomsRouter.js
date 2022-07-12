@@ -1,4 +1,5 @@
 import express from "express"
+import { verifyAdmin } from "../middlewares/auth.middleware.js"
 import Hotel from "../models/Hotel/Hotel.schema.js"
 import {
   createRoom,
@@ -8,7 +9,6 @@ import {
   updateRoom,
   updateRoomAvailability,
 } from "../models/Room/Room.model.js"
-import { verifyAdmin } from "../utils/verifyToken.js"
 
 const roomRouter = express.Router()
 

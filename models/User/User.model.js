@@ -1,4 +1,4 @@
-import User from './User.schema.js'
+import User from "./User.schema.js"
 
 // Register user
 
@@ -9,6 +9,14 @@ export const createUser = (newUser) => {
   } catch (error) {
     console.log(error)
   }
+}
+
+export const getUserById = (id) => {
+  return User.findById(id)
+}
+
+export const getUserByUsernameAndRefreshToken = (filter) => {
+  return User.findOne(filter)
 }
 
 // get user by username
@@ -60,4 +68,14 @@ export const getAllUsers = (_id) => {
   } catch (error) {
     console.log(error)
   }
+}
+
+export const setRefreshJWT = (_id, token) => {
+  return User.findByIdAndUpdate(_id, {
+    refreshJWT: token,
+  })
+}
+
+export const removeRefreshJWT = (refreshJWT) => {
+  return User.findOneAndUpdate({ refreshJWT }, { refreshJWT: "" })
 }

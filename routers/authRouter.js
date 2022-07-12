@@ -1,22 +1,28 @@
-import express from 'express'
-import { comparePassword, hashPassword } from '../helpers/bcrypt.helper.js'
-import { createUser, getUserByUsername } from '../models/User/User.model.js'
-import { createError } from '../utils/error.js'
-import jwt from 'jsonwebtoken'
+import express from "express"
+import { comparePassword, hashPassword } from "../helpers/bcrypt.helper.js"
+import {
+  createUser,
+  getUserByUsername,
+  removeRefreshJWT,
+} from "../models/User/User.model.js"
+import { createError } from "../utils/error.js"
+import { getJWTs } from "../helpers/jwt.helper.js"
+import { verifyAdmin } from "../middlewares/auth.middleware.js"
+import { removeSession } from "../models/Session/Session.model.js"
 
 const authRouter = express.Router()
 
-authRouter.all('/', (req, res, next) => {
+authRouter.all("/", (req, res, next) => {
   next()
 })
 
-authRouter.get('/', (req, res, next) => {
-  res.send('This is auth endpoint')
+authRouter.get("/", (req, res, next) => {
+  res.send("This is auth endpoint")
 })
 
 // Register
 
-authRouter.post('/register', async (req, res, next) => {
+authRouter.post("/register", async (req, res, next) => {
   try {
     // encrypt password
     const hashPass = hashPassword(req.body.password)
@@ -26,52 +32,64 @@ authRouter.post('/register', async (req, res, next) => {
       const user = await createUser(req.body)
 
       return res.json({
-        status: 'success',
-        message: 'New user has been successfully created.',
+        status: "success",
+        message: "New user has been successfully created.",
         user,
       })
     }
     res.json({
-      status: 'error',
-      message: 'Unable to create new user. Please try again later',
+      status: "error",
+      message: "Unable to create new user. Please try again later",
     })
   } catch (error) {
     next(error)
   }
 })
 
-authRouter.post('/login', async (req, res, next) => {
+//login
+authRouter.post("/login", async (req, res, next) => {
   try {
     const { username, password } = req.body
 
     const user = await getUserByUsername(username)
-    if (user?._id) {
+    if (user?._id && user?.isAdmin) {
       // check if password is valid
 
       const isPasswordMatch = comparePassword(password, user.password)
 
       if (isPasswordMatch) {
-        const token = jwt.sign(
-          { id: user._id, isAdmin: user.isAdmin },
-          process.env.JWT_SECRET,
-        )
+        //get JWTs and send to client
 
-        const { password, isAdmin, ...otherDetails } = user._doc
-        return res
-          .cookie('access_token', token, {
-            httpOnly: true, //it doesn't allow any client secret to reach this cookie
-          })
-          .status(200)
-          .json({
-            status: 'success',
-            message: 'Login successful',
-            ...otherDetails,
-          })
+        const jwts = await getJWTs({ _id: user._id, username: user.username })
+        user.password = undefined
+
+        return res.json({
+          status: "success",
+          message: "Login successful",
+          jwts,
+          user,
+        })
       } else {
-        return next(createError(400, 'Wrong password or username'))
+        return next(createError(400, "Wrong password or username"))
       }
     }
-    return next(createError(404, 'User not found!'))
+    return next(createError(404, "User not found!"))
+  } catch (error) {
+    next(error)
+  }
+})
+
+//logout
+authRouter.post("/logout", async (req, res, next) => {
+  try {
+    const { accessJWT, refreshJWT } = req.body
+    accessJWT && (await removeSession(accessJWT))
+    refreshJWT && (await removeRefreshJWT(refreshJWT))
+
+    res.json({
+      status: "success",
+      message: "Logged out successfully",
+    })
   } catch (error) {
     next(error)
   }

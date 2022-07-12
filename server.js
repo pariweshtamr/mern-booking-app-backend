@@ -1,17 +1,17 @@
-import dotenv from 'dotenv'
+import dotenv from "dotenv"
 dotenv.config()
 
-import express from 'express'
+import express from "express"
 const app = express()
 
-import cors from 'cors'
-import helmet from 'helmet'
-import cookieParser from 'cookie-parser'
+import cors from "cors"
+import helmet from "helmet"
+import cookieParser from "cookie-parser"
 
 const PORT = process.env.PORT || 8000
 
 // Connect mongoDB
-import mongoClient from './config/db.js'
+import mongoClient from "./config/db.js"
 mongoClient()
 
 // Middlewares
@@ -22,20 +22,22 @@ app.use(helmet())
 app.use(cookieParser())
 
 // Import routers
-import authRouter from './routers/authRouter.js'
-import userRouter from './routers/usersRouter.js'
-import hotelsRouter from './routers/hotelsRouter.js'
-import roomRouter from './routers/roomsRouter.js'
+import authRouter from "./routers/authRouter.js"
+import userRouter from "./routers/usersRouter.js"
+import hotelsRouter from "./routers/hotelsRouter.js"
+import roomRouter from "./routers/roomsRouter.js"
+import tokenRouter from "./routers/tokenRouter.js"
 
 // Use Routers
-app.use('/api/auth', authRouter)
-app.use('/api/users', userRouter)
-app.use('/api/hotels', hotelsRouter)
-app.use('/api/rooms', roomRouter)
+app.use("/api/auth", authRouter)
+app.use("/api/users", userRouter)
+app.use("/api/hotels", hotelsRouter)
+app.use("/api/rooms", roomRouter)
+app.use("/api/v1/token", tokenRouter)
 
 app.use((error, req, res, next) => {
   const errorStatus = error.status || 500
-  const errorMessage = error.message || 'Something went wrong!'
+  const errorMessage = error.message || "Something went wrong!"
   return res.status(errorStatus).json({
     success: false,
     status: errorStatus,
