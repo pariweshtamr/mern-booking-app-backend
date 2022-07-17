@@ -6,9 +6,13 @@ export const verifyAdmin = async (req, res, next) => {
   try {
     const { authorization } = req.headers
 
+    console.log(authorization, "asdasd")
+
     if (authorization) {
       //validate accessJWT
       const decoded = verifyAccessJWT(authorization)
+
+      console.log(decoded)
 
       if (decoded === "jwt expired") {
         return res.status(403).json({

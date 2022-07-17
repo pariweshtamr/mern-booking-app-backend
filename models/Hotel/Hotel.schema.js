@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose"
 const Schema = mongoose.Schema
 
 const HotelSchema = new Schema({
@@ -27,11 +27,9 @@ const HotelSchema = new Schema({
   },
   title: {
     type: String,
-    required: true,
   },
   description: {
     type: String,
-    required: true,
   },
   rating: {
     type: Number,
@@ -51,5 +49,5 @@ const HotelSchema = new Schema({
   },
 })
 
-const Hotel = mongoose.model('Hotel', HotelSchema)
+const Hotel = mongoose.model("Hotel", HotelSchema)
 export default Hotel
